@@ -31,3 +31,6 @@ AUTH_PASSWORD_VALIDATORS = config("AUTH_PASSWORD_VALIDATORS", A_P_V)
 OPTIMIZED_IMAGE_METHOD = "pillow"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+CORS_ALLOWED_ORIGINS = ['https://api.littleknitsstory.com']
+CSRF_TRUSTED_ORIGINS = ['https://api.littleknitsstory.com']

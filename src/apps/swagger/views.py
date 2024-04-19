@@ -1,4 +1,3 @@
-import requests
 from drf_yasg2 import openapi
 from drf_yasg2.views import get_schema_view
 from rest_framework import permissions
