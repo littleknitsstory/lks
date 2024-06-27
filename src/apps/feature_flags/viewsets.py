@@ -20,7 +20,7 @@ class FeatureViewSet(ModelViewSet):
         for feature in q_s:
             flag = config("FEATURE_FLAG_" + feature.name.upper(), "").capitalize()
             if flag in ("True", "False"):
-                feature.is_active = {"True": True, "False": False}[flag]
+                feature.is_active = {"True": True, "False": False}.get(flag)
         return q_s
 
     def list(self, request, *args, **kwargs):

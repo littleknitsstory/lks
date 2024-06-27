@@ -13,7 +13,7 @@ services:
       - ./media:/media
       - ./nginx.conf.nginx:/etc/nginx/conf.d/default.conf
       - ./certbot/www:/var/www/certbot/:ro
-      - ./certbot/conf/:/etc/nginx/ssl/:ro
+      - ./certbot/conf:/etc/letsencrypt/:ro
     env_file: .env
     ports:
       - "${NGINX_PORT}:80"
@@ -22,8 +22,8 @@ services:
   certbot:
     image: certbot/certbot:latest
     volumes:
-      - ./certbot/www/:/var/www/certbot/:rw
-      - ./certbot/conf/:/etc/letsencrypt/:rw
+      - ./certbot/www:/var/www/certbot/:rw
+      - ./certbot/conf:/etc/letsencrypt/:rw
 
   redis:
     container_name: lks_${ENVIRONMENT}_redis
@@ -39,6 +39,13 @@ services:
     env_file: .env
     volumes:
       - ./data/pgdata:/var/lib/postgresql/data
+
+    healthcheck:
+      test: pg_isready -U ${db_user}
+      interval: 2s
+      timeout: 3s
+      retries: 40
+
 
   backend:
     container_name: lks_${ENVIRONMENT}_backend
